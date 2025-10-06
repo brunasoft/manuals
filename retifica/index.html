@@ -134,6 +134,7 @@
             height: auto;
             border-radius: 4px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
         }
         
         .image-caption {
@@ -186,6 +187,18 @@
             padding: 20px;
             color: #666;
             border-top: 1px solid #eee;
+        }
+        
+        .placeholder-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1.2rem;
+            border-radius: 4px;
         }
         
         @media (max-width: 768px) {
@@ -272,9 +285,9 @@
                 </div>
             </div>
             
-            <!-- IMAGEM DO PASSO 1 (OPCIONAL) -->
+            <!-- IMAGEM DO PASSO 1 -->
             <div class="image-container">
-                <img src="<!-- CAMINHO DA IMAGEM -->" alt="Tela de reabertura da folha de pagamento">
+                <img src="images/figura1.png" alt="Navegação no sistema: Cadastros > Funcionário > Empréstimo Consignado">
                 <p class="image-caption">Figura 1: Tela de reabertura da folha de pagamento</p>
             </div>
             
@@ -288,9 +301,9 @@
                 </div>
             </div>
             
-            <!-- IMAGEM DO PASSO 2 (OPCIONAL) -->
+            <!-- IMAGEM DO PASSO 2 -->
             <div class="image-container">
-                <img src="<!-- CAMINHO DA IMAGEM -->" alt="Exclusão do evento S-1210">
+                <img src="images/figura2.png" alt="Navegação no sistema: Cadastros > Funcionário > Empréstimo Consignado">
                 <p class="image-caption">Figura 2: Exclusão do evento S-1210</p>
             </div>
             
@@ -304,9 +317,9 @@
                 </div>
             </div>
             
-            <!-- IMAGEM DO PASSO 3 (OPCIONAL) -->
+            <!-- IMAGEM DO PASSO 3 -->
             <div class="image-container">
-                <img src="<!-- CAMINHO DA IMAGEM -->" alt="Tela de geração de retificação">
+                <img src="images/figura3.png" alt="Navegação no sistema: Cadastros > Funcionário > Empréstimo Consignado">
                 <p class="image-caption">Figura 3: Tela de geração de retificação</p>
             </div>
             
@@ -321,7 +334,7 @@
             
             <!-- IMAGEM DO PASSO 4 -->
             <div class="image-container">
-                <img src="<!-- CAMINHO DA IMAGEM -->" alt="Tela de seleção de registros para retificação">
+                <img src="images/figura4.png" alt="Navegação no sistema: Cadastros > Funcionário > Empréstimo Consignado">
                 <p class="image-caption">Figura 4: Tela de seleção de registros para retificação</p>
             </div>
             
@@ -336,7 +349,9 @@
             
             <!-- IMAGEM DO PASSO 5 -->
             <div class="image-container">
-                <img src="<!-- CAMINHO DA IMAGEM -->" alt="Tela do transmissor com eventos periódicos">
+                <div class="placeholder-image">
+                    [Imagem do Transmissor - Não especificada no PDF]
+                </div>
                 <p class="image-caption">Figura 5: Tela do transmissor com eventos periódicos</p>
             </div>
         </div>
