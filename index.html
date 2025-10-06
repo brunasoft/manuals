@@ -1,3 +1,358 @@
-<ul>
-  <li><a href="./multiplosemprest/">Múltiplos Empréstimos Consignados</a></li>
-</ul>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central de Manuais — SOFT-ATA</title>
+<meta name="color-scheme" content="light">
+<style>
+  :root{
+    --brand:#349720;
+    --brand-600:#2e861c;
+    --brand-700:#277317;
+    --fg:#1d2127;
+    --muted:#6b7280;
+    --bg:#f6f7f8;
+    --card:#ffffff;
+    --ring: rgba(52,151,32,.25);
+    --border:#e5e7eb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    color:var(--fg);
+    background:linear-gradient(180deg,#f9fbfa 0%, #f4f9f3 60%, #f7faf7 100%);
+  }
+
+  /* Topbar */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:saturate(140%) blur(4px);
+    background:rgba(255,255,255,.85);
+    border-bottom:1px solid var(--border);
+  }
+  .container{max-width:1150px; margin:0 auto; padding:16px}
+  .brand{
+    display:flex; align-items:center; gap:12px; margin-bottom:10px;
+  }
+  .logo{
+    width:42px; height:42px; border-radius:12px; background:
+      conic-gradient(from 210deg at 50% 50%, var(--brand) 0 40%, #8fd47f 40% 65%, #e8f7e4 65% 100%);
+    box-shadow:0 6px 20px rgba(52,151,32,.28), inset 0 0 0 1px #dff2d9;
+  }
+  h1{font-size:1.35rem; margin:0}
+  .subtitle{color:var(--muted); font-size:.95rem}
+
+  /* Search */
+  .searchbar{
+    display:flex; align-items:center; gap:10px; margin-top:10px;
+  }
+  .input{
+    flex:1; position:relative;
+  }
+  .input input{
+    width:100%; padding:12px 42px 12px 42px; border-radius:12px; border:1px solid var(--border);
+    background:#fff; outline:none; font-size:0.98rem; transition:.2s;
+    box-shadow:0 0 0 0 transparent;
+  }
+  .input input:focus{border-color:var(--brand); box-shadow:0 0 0 4px var(--ring)}
+  .input .icon{
+    position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted);
+  }
+  .result-count{color:var(--muted); font-size:.9rem}
+
+  /* Grid */
+  .grid{
+    display:grid; gap:16px; padding:18px 16px 48px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  }
+
+  /* Module Card (accordion) */
+  .module{
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.03);
+    overflow:hidden; transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .module:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(0,0,0,.05)}
+  .module header{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:14px 14px; cursor:pointer; user-select:none;
+  }
+  .module h2{
+    font-size:1.02rem; margin:0; font-weight:700; color:var(--brand-700);
+  }
+  .badge{
+    background:rgba(52,151,32,.1); color:var(--brand-700);
+    padding:4px 8px; border-radius:999px; font-size:.78rem; font-weight:700; border:1px solid rgba(52,151,32,.18);
+  }
+  .chev{color:var(--muted); transition: transform .2s ease}
+  .module.open .chev{transform:rotate(180deg)}
+  .content{display:none; border-top:1px dashed var(--border); background:linear-gradient(180deg,#ffffff 0%, #fbfefb 100%)}
+  .module.open .content{display:block}
+
+  /* Manual list */
+  .manuals{list-style:none; margin:0; padding:10px 12px 14px}
+  .manuals li{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:10px 8px; border-radius:12px; transition: background .15s ease;
+  }
+  .manuals li:hover{background:#f7fbf6}
+  .manuals a{
+    text-decoration:none; color:#12460c; font-weight:600;
+  }
+  .pill{
+    margin-left:auto; font-size:.75rem; color:var(--muted);
+    border:1px solid var(--border); padding:2px 8px; border-radius:999px;
+    background:#fff;
+  }
+  .empty{
+    padding:14px 12px; color:var(--muted); font-style:italic;
+  }
+
+  /* Footer */
+  footer{
+    border-top:1px solid var(--border);
+    background:#ffffffa6; backdrop-filter: blur(2px);
+  }
+  .footline{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between}
+  .credits{color:var(--muted); font-size:.9rem}
+
+  /* Small helpers */
+  .tag{
+    display:inline-block; padding:3px 8px; border-radius:999px; font-size:.72rem; border:1px solid rgba(0,0,0,.06);
+    color:var(--brand-700); background:rgba(52,151,32,.08); margin-left:6px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Central de Manuais — SOFT-ATA</h1>
+          <div class="subtitle">Encontre os manuais por módulo ou usando a busca.</div>
+        </div>
+      </div>
+
+      <div class="searchbar">
+        <div class="input">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 21l-4.2-4.2M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <input id="q" type="search" placeholder="Busque por módulo, assunto ou palavra-chave…">
+        </div>
+        <div class="result-count"><span id="count">0</span> manuais</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid of modules -->
+  <main class="grid" id="grid">
+    <!-- TEMPLATE DE MÓDULO
+      Para adicionar manuais: adicione novos <li> dentro do <ul class="manuals">
+      Cada <li> pode ter:
+        <a href="URL_DO_MANUAL">Título do manual</a>
+        <span class="pill">Assunto</span> (opcional)
+      Dica: use caminhos absolutos a partir da raiz do site: /manuals/<pasta>/
+    -->
+
+    <!-- Folha de Pagamento -->
+    <section class="module open" data-module="Folha de Pagamento">
+      <header>
+        <h2>Folha de Pagamento <span class="tag">RH</span></h2>
+        <span class="badge" data-badge>1</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content">
+        <ul class="manuals">
+          <!-- EXEMPLO (já existente no seu repositório) -->
+          <li data-topics="empréstimo consignado eventos eSocial múltiplos empréstimos consignados">
+            <a href="/manuals/multiplosemprest/">Múltiplos Empréstimos Consignados</a>
+            <span class="pill">Consignado</span>
+          </li>
+
+          <!-- Acrescente outros manuais deste módulo abaixo
+          <li data-topics="adiantamento 13º férias cálculo">
+            <a href="/manuals/adiantamento-ferias/">Adiantamento de Férias</a>
+            <span class="pill">Férias</span>
+          </li>
+          -->
+        </ul>
+        <div class="empty" hidden>Nenhum manual encontrado neste módulo.</div>
+      </div>
+    </section>
+
+    <!-- Escrita Fiscal -->
+    <section class="module" data-module="Escrita Fiscal">
+      <header>
+        <h2>Escrita Fiscal <span class="tag">Fiscal</span></h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content">
+        <ul class="manuals"><!-- adicione <li> aqui --></ul>
+        <div class="empty">Nenhum manual cadastrado ainda.</div>
+      </div>
+    </section>
+
+    <!-- Contabilidade Geral -->
+    <section class="module" data-module="Contabilidade Geral">
+      <header>
+        <h2>Contabilidade Geral <span class="tag">Contábil</span></h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+    <!-- Livro Caixa -->
+    <section class="module" data-module="Livro Caixa">
+      <header>
+        <h2>Livro Caixa</h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+    <!-- Ativo Imobilizado -->
+    <section class="module" data-module="Ativo Imobilizado">
+      <header>
+        <h2>Ativo Imobilizado</h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+    <!-- Gerenciador Contábil -->
+    <section class="module" data-module="Gerenciador Contábil">
+      <header>
+        <h2>Gerenciador Contábil</h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+    <!-- Controle de Tributos -->
+    <section class="module" data-module="Controle de Tributos">
+      <header>
+        <h2>Controle de Tributos</h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+    <!-- Demonstrativo de Gado -->
+    <section class="module" data-module="Demonstrativo de Gado">
+      <header>
+        <h2>Demonstrativo de Gado</h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+    <!-- Seleção de Pessoal -->
+    <section class="module" data-module="Seleção de Pessoal">
+      <header>
+        <h2>Seleção de Pessoal</h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+    <!-- Protocolo -->
+    <section class="module" data-module="Protocolo">
+      <header>
+        <h2>Protocolo</h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+    <!-- Sindical -->
+    <section class="module" data-module="Sindical">
+      <header>
+        <h2>Sindical</h2>
+        <span class="badge" data-badge>0</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </header>
+      <div class="content"><ul class="manuals"></ul><div class="empty">Nenhum manual cadastrado ainda.</div></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footline">
+      <div class="credits">© 1991–2025 SOFT-ATA — Central de Manuais</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="tag">Atualize este índice editando o arquivo raiz <strong>index.html</strong></span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // --- Accordion toggle & badge counts
+  document.querySelectorAll('.module header').forEach(h=>{
+    h.addEventListener('click', e=>{
+      const mod = h.parentElement;
+      // Evita click fechar ao clicar em links dentro do header (não há, mas por segurança)
+      if(e.target.closest('a')) return;
+      mod.classList.toggle('open');
+    });
+  });
+
+  // Atualiza contadores por módulo
+  function updateBadges(){
+    document.querySelectorAll('.module').forEach(m=>{
+      const list = m.querySelector('.manuals');
+      const items = list.querySelectorAll('li:not([hidden])');
+      const badge = m.querySelector('[data-badge]');
+      const empty = m.querySelector('.empty');
+      const total = items.length;
+      badge.textContent = total;
+      empty.hidden = total !== 0;
+    });
+  }
+  updateBadges();
+
+  // --- Busca global (filtra títulos e data-topics)
+  const q = document.getElementById('q');
+  q.addEventListener('input', ()=>{
+    const term = q.value.trim().toLowerCase();
+    let found = 0;
+    document.querySelectorAll('.manuals li').forEach(li=>{
+      const text = li.textContent.toLowerCase();
+      const topics = (li.getAttribute('data-topics')||'').toLowerCase();
+      const hit = !term || text.includes(term) || topics.includes(term);
+      li.hidden = !hit;
+      if(hit) found++;
+    });
+    document.getElementById('count').textContent = found;
+    updateBadges();
+    // Expande módulos com resultado quando há busca
+    document.querySelectorAll('.module').forEach(m=>{
+      if(term){
+        const hasVisible = m.querySelector('.manuals li:not([hidden])');
+        m.classList.toggle('open', !!hasVisible);
+      }
+    });
+  });
+
+  // Inicializa contador global
+  (function initGlobalCount(){
+    const total = document.querySelectorAll('.manuals li').length;
+    document.getElementById('count').textContent = total;
+  })();
+</script>
+</body>
+</html>
