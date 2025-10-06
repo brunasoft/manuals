@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HelpCenter - Manuais do Sistema</title>
+    <title>SOFT-ATA TECNOLOGIA EM SOFTWARES - Manuais do Sistema</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -326,54 +326,6 @@
             transform: translateY(-2px);
         }
         
-        .note-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .note-item {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            border-left: 4px solid #f8961e;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .note-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .note-icon {
-            width: 50px;
-            height: 50px;
-            background: #f8961e;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-        
-        .note-text h4 {
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-        
-        .note-text p {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 0;
-        }
-        
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -434,7 +386,7 @@
                     </div>
                 </div>
                 <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Pesquisar em manuais e notas...">
+                    <input type="text" id="searchInput" placeholder="Pesquisar em manuais...">
                     <button id="searchButton">
                         <i class="fas fa-search"></i>
                     </button>
@@ -451,24 +403,9 @@
             </div>
             
             <div class="content-area">
-                <div class="tabs">
-                    <div class="tab active" data-tab="manuais">
-                        <i class="fas fa-book"></i> Manuais de Usabilidade
-                    </div>
-                    <div class="tab" data-tab="notas">
-                        <i class="fas fa-sticky-note"></i> Notas de Ajuda/Dúvidas
-                    </div>
-                </div>
-                
                 <div class="content active" id="manuais-content">
                     <div class="modules-grid" id="manuais-modules">
                         <!-- Manuais serão carregados aqui via JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="content" id="notas-content">
-                    <div class="modules-grid" id="notas-modules">
-                        <!-- Notas serão carregadas aqui via JavaScript -->
                     </div>
                 </div>
             </div>
@@ -479,16 +416,6 @@
         // Dados dos módulos
         const modules = [
             { id: 1, name: "Folha de Pagamento", icon: "fas fa-file-invoice-dollar" },
-            { id: 2, name: "Escrita Fiscal", icon: "fas fa-receipt" },
-            { id: 3, name: "Contabilidade Geral", icon: "fas fa-balance-scale" },
-            { id: 4, name: "Livro Caixa", icon: "fas fa-book" },
-            { id: 5, name: "Ativo Imobilizado", icon: "fas fa-building" },
-            { id: 6, name: "Gerenciador Contábil", icon: "fas fa-calculator" },
-            { id: 7, name: "Controle de Tributos", icon: "fas fa-chart-bar" },
-            { id: 8, name: "Demonstrativo de Gado", icon: "fas fa-horse" },
-            { id: 9, name: "Seleção de Pessoal", icon: "fas fa-user-tie" },
-            { id: 10, name: "Protocolo", icon: "fas fa-clipboard-list" },
-            { id: 11, name: "Sindical", icon: "fas fa-handshake" }
         ];
 
         // Dados dos manuais - AQUI VOCÊ ADICIONA OS LINKS DOS SEUS MANUAIS
@@ -506,28 +433,8 @@
             // Lembre-se de substituir os links de exemplo pelos links reais dos seus manuais
         ];
 
-        // Dados das notas de ajuda
-        const notes = [
-            { 
-                id: 1, 
-                moduleId: 1, 
-                title: "Problema ao calcular horas extras", 
-                description: "Solução para o erro comum no cálculo de horas extras.", 
-                content: "<p>Se você está enfrentando problemas ao calcular horas extras, verifique os seguintes pontos:</p><ol><li>Certifique-se de que os horários de entrada e saída estão corretos</li><li>Verifique as configurações de jornada de trabalho</li><li>Confirme os percentuais de acréscimo para horas extras</li></ol><p>Se o problema persistir, entre em contato com o suporte técnico.</p>" 
-            },
-            { 
-                id: 2, 
-                moduleId: 2, 
-                title: "Como emitir NFC-e", 
-                description: "Passo a passo para emissão de NFC-e no sistema.", 
-                content: "<p>Para emitir uma NFC-e:</p><ol><li>Acesse o módulo de Vendas</li><li>Selecione o cliente (ou consumidor final)</li><li>Adicione os produtos ao pedido</li><li>Clique em 'Emitir NFC-e'</li><li>Confirme os dados e finalize a emissão</li></ol>" 
-            },
-            // Adicione mais notas de ajuda aqui
-        ];
-
         // Estado da aplicação
         let currentModuleId = null;
-        let currentTab = 'manuais';
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
@@ -537,19 +444,10 @@
         function initApp() {
             renderSidebarMenu();
             renderManuaisModules();
-            renderNotasModules();
             setupEventListeners();
         }
 
         function setupEventListeners() {
-            // Tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabName = this.getAttribute('data-tab');
-                    switchTab(tabName);
-                });
-            });
-            
             // Pesquisa
             document.getElementById('searchButton').addEventListener('click', performSearch);
             document.getElementById('searchInput').addEventListener('keyup', function(e) {
@@ -650,45 +548,6 @@
             });
         }
 
-        function renderNotasModules() {
-            const notasModules = document.getElementById('notas-modules');
-            notasModules.innerHTML = '';
-            
-            let filteredNotes = notes;
-            
-            if (currentModuleId) {
-                filteredNotes = notes.filter(note => note.moduleId === currentModuleId);
-            }
-            
-            if (filteredNotes.length === 0) {
-                notasModules.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-sticky-note"></i>
-                        <h3>Nenhuma nota de ajuda disponível</h3>
-                        <p>Em breve teremos notas de ajuda para este módulo</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            filteredNotes.forEach(note => {
-                const module = modules.find(m => m.id === note.moduleId);
-                const item = document.createElement('div');
-                item.className = 'note-item';
-                item.innerHTML = `
-                    <div class="note-icon">
-                        <i class="fas fa-sticky-note"></i>
-                    </div>
-                    <div class="note-text">
-                        <h4>${note.title}</h4>
-                        <p>${note.description}</p>
-                        <small>${module.name}</small>
-                    </div>
-                `;
-                notasModules.appendChild(item);
-            });
-        }
-
         function selectModule(moduleId) {
             currentModuleId = moduleId;
             
@@ -704,61 +563,18 @@
             });
             
             // Atualizar conteúdo
-            if (currentTab === 'manuais') {
-                renderManuaisModules();
-            } else {
-                renderNotasModules();
-            }
-        }
-
-        function switchTab(tabName) {
-            currentTab = tabName;
-            
-            // Atualizar tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                if (tab.getAttribute('data-tab') === tabName) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
-            
-            // Atualizar conteúdo
-            document.querySelectorAll('.content').forEach(content => {
-                if (content.id === `${tabName}-content`) {
-                    content.classList.add('active');
-                } else {
-                    content.classList.remove('active');
-                }
-            });
-            
-            // Renderizar conteúdo da aba
-            if (tabName === 'manuais') {
-                renderManuaisModules();
-            } else {
-                renderNotasModules();
-            }
+            renderManuaisModules();
         }
 
         function performSearch() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             
-            if (currentTab === 'manuais') {
-                const filteredManuals = manuals.filter(manual => 
-                    manual.title.toLowerCase().includes(searchTerm) || 
-                    manual.description.toLowerCase().includes(searchTerm)
-                );
-                
-                renderFilteredManuals(filteredManuals);
-            } else {
-                const filteredNotes = notes.filter(note => 
-                    note.title.toLowerCase().includes(searchTerm) || 
-                    note.description.toLowerCase().includes(searchTerm) ||
-                    note.content.toLowerCase().includes(searchTerm)
-                );
-                
-                renderFilteredNotes(filteredNotes);
-            }
+            const filteredManuals = manuals.filter(manual => 
+                manual.title.toLowerCase().includes(searchTerm) || 
+                manual.description.toLowerCase().includes(searchTerm)
+            );
+            
+            renderFilteredManuals(filteredManuals);
         }
 
         function renderFilteredManuals(filteredManuals) {
@@ -807,39 +623,6 @@
                         alert('Manual em desenvolvimento. Em breve estará disponível.');
                     }
                 });
-            });
-        }
-
-        function renderFilteredNotes(filteredNotes) {
-            const notasModules = document.getElementById('notas-modules');
-            notasModules.innerHTML = '';
-            
-            if (filteredNotes.length === 0) {
-                notasModules.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-search"></i>
-                        <h3>Nenhuma nota encontrada</h3>
-                        <p>Tente alterar os termos da pesquisa</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            filteredNotes.forEach(note => {
-                const module = modules.find(m => m.id === note.moduleId);
-                const item = document.createElement('div');
-                item.className = 'note-item';
-                item.innerHTML = `
-                    <div class="note-icon">
-                        <i class="fas fa-sticky-note"></i>
-                    </div>
-                    <div class="note-text">
-                        <h4>${note.title}</h4>
-                        <p>${note.description}</p>
-                        <small>${module.name}</small>
-                    </div>
-                `;
-                notasModules.appendChild(item);
             });
         }
     </script>
