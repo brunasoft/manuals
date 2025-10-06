@@ -74,10 +74,20 @@
             gap: 15px;
         }
         
-        .logo i {
-            font-size: 32px;
+        .logo-img {
+            width: 60px;
+            height: 60px;
             background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
+            padding: 5px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-img img {
+            max-width: 100%;
+            max-height: 100%;
             border-radius: 50%;
         }
         
@@ -379,9 +389,11 @@
         <header>
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-life-ring"></i>
+                    <div class="logo-img">
+                        <img src="softlogo.png" alt="Soft Logo">
+                    </div>
                     <div>
-                        <h1>Help<span>Center</span></h1>
+                        <h1>SOFT-ATA <span>TECNOLOGIA EM SOFTWARES</span></h1>
                         <p>Manuais de Usabilidade do Sistema</p>
                     </div>
                 </div>
