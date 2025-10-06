@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual: Incluir Mais de um Empréstimo Consignado</title>
+    <style>
+        :root {
+    --primary: #345e35;
+    --secondary: #4a7c4b;
+    --accent: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2a4b2b;
+    --success: #2ecc71;
+}
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .important-box {
+            background-color: #ffeaa7;
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .step-box {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background-color: var(--secondary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: #666;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .info-item {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary);
+        }
+        
+        .info-item h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .step-box {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                margin-bottom: 10px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Manual: Incluir Mais de um Empréstimo Consignado</h1>
+            <p>Guia completo para adicionar múltiplos empréstimos no sistema eConsignado</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">Visão Geral</h2>
+            <p>Este manual explica o processo para incluir mais de um empréstimo consignado para um funcionário no sistema eConsignado, seguindo as diretrizes do eSocial.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Evento Padrão:</strong> O eConsignado utiliza o <strong>Evento 66 – "Desconto de Empréstimo Consignado"</strong> como padrão.</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">Como Funciona o Desconto de Múltiplos Empréstimos</h2>
+            
+            <div class="important-box">
+                <p><strong>Observação Importante:</strong> O desconto sempre respeitará o limite máximo de 35% da margem consignável.</p>
+            </div>
+            
+            <p>O sistema realiza automaticamente o cálculo das bases e aplica os descontos na seguinte ordem:</p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>1. Primeiro Empréstimo</h3>
+                    <p>Primeiro, será efetuado o desconto referente ao primeiro evento criado.</p>
+                </div>
+                
+                <div class="info-item">
+                    <h3>2. Segundo Empréstimo</h3>
+                    <p>Caso ainda exista saldo disponível, o sistema descontará o valor do segundo evento.</p>
+                </div>
+                
+                <div class="info-item">
+                    <h3>3. Processo Contínuo</h3>
+                    <p>Esse processo continuará sucessivamente até atingir o limite da margem.</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <p><strong>Atenção:</strong> Se o saldo não for suficiente, o sistema efetuará um desconto parcial do valor do empréstimo. Em situações em que não houver saldo disponível, nenhum desconto será aplicado.</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">Passo a Passo para Gerar Mais de um Consignado</h2>
+            
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Acessar o Módulo de Empréstimo Consignado</h3>
+                    <p>No sistema, navegue até: <strong>Cadastros > Funcionário > Empréstimo Consignado</strong></p>
+                </div>
+            </div>
+            
+            <div class="image-container">
+                <!-- Inserir imagem do caminho no sistema -->
+                <img src="images/Caminho1.png" alt="Navegação no sistema: Cadastros > Funcionário > Empréstimo Consignado">
+                <p class="image-caption">Figura 1: Caminho para acessar o módulo de Empréstimo Consignado</p>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Selecionar o Funcionário</h3>
+                    <p>Selecione o funcionário desejado na lista e clique em <strong>"Novo"</strong> para criar um novo empréstimo.</p>
+                </div>
+            </div>
+            
+            <div class="image-container">
+                <!-- Inserir imagem da tela de seleção de funcionário -->
+                <img src="images/Caminho2.png" alt="Tela de seleção de funcionário com botão Novo">
+                <p class="image-caption">Figura 2: Seleção do funcionário e botão "Novo"</p>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Preencher Informações do Empréstimo</h3>
+                    <p>Insira as informações do empréstimo consignado e, no campo <strong>"Código do Evento"</strong>, informe o código do evento que você já criou e configurou previamente.</p>
+                </div>
+            </div>
+            
+            <div class="image-container">
+                <!-- Inserir imagem do formulário de empréstimo -->
+                <img src="images/Caminho3.png" alt="Formulário de empréstimo consignado com campo Código do Evento">
+                <p class="image-caption">Figura 3: Formulário de empréstimo com campo "Código do Evento"</p>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Gravar os Dados</h3>
+                    <p>Após preencher todas as informações, grave os dados. O sistema criará automaticamente os <strong>eventos fixos correspondentes aos devidos recibos</strong>, permitindo que você comece a utilizar o módulo imediatamente.</p>
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Repetir o Processo</h3>
+                    <p>Repita o mesmo processo para cada empréstimo que o funcionário possuir.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">Informações Importantes</h2>
+            
+            <div class="warning-box">
+                <p><strong>Atenção:</strong> O eSocial não permite o uso do mesmo evento dentro de um mesmo recibo. Portanto, se o funcionário possuir, por exemplo, três empréstimos, e o sistema já possui um evento padrão, será necessário criar mais dois eventos.</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>Reutilização de Eventos:</strong> Os eventos criados podem ser reutilizados para outros funcionários. Basta criar apenas os que ainda não existirem, lembrando sempre de configurá-los corretamente e enviá-los ao eSocial.</p>
+            </div>
+            
+            <p>Para incluir mais de um empréstimo, o usuário deverá:</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Criar um novo evento idêntico ao Evento 66</li>
+                <li>Configurá-lo adequadamente</li>
+                <li>Enviá-lo ao eSocial</li>
+            </ul>
+            
+            <p style="margin-top: 15px;">Junto a este documento será encaminhado o passo a passo completo sobre como criar e enviar um evento ao eSocial.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Manual: Incluir Mais de um Empréstimo Consignado</p>
+            <p>© 2025 - eConsignado</p>
+        </div>
+    </footer>
+</body>
+</html>
