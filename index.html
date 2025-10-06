@@ -1,649 +1,276 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HelpCenter — Central de Manuais</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root{
-      --primary:#349720;        /* verde padrão */
-      --primary-dark:#2e7f1b;
-      --secondary:#1f6d0f;
-      --accent:#2dbb6f;         /* verde de apoio */
-      --light:#f6faf5;
-      --dark:#1f2722;
-      --gray:#6b746e;
-      --gray-light:#e7eee6;
-      --warning:#f0b429;
-      --danger:#e53935;
-      --success:#38b000;
-      --radius:14px;
-      --shadow:0 14px 40px rgba(0,0,0,.08);
-      --t: .25s ease;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      min-height:100vh;background:linear-gradient(160deg,#f7fbf6 0%,#eef7ec 50%,#f7fbf6 100%);
-      color:var(--dark); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; line-height:1.55; padding:20px;
-    }
-    .container{max-width:1400px;margin:0 auto}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central de Manuais — SOFT-ATA</title>
+<meta name="color-scheme" content="light">
+<style>
+  :root{
+    --brand:#349720; --brand-600:#2c7f1b; --brand-700:#236b14;
+    --ink:#101315; --muted:#6e7b70; --bg:#f4faf2; --card:#ffffff; --border:#e6efe4; --ring:rgba(52,151,32,.25);
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:
+    radial-gradient(1200px 600px at 0% 0%, rgba(52,151,32,.10), transparent 50%),
+    linear-gradient(180deg,#f9fcf7 0%, #f4faf2 50%, #f7fbf6 100%)}
 
-    header{
-      background:linear-gradient(135deg,#ffffff 0%, #f0f8ee 60%, #e9f5e6 100%);
-      border:1px solid var(--gray-light); border-radius:var(--radius); box-shadow:var(--shadow);
-      padding:24px 28px; margin-bottom:28px; position:relative; overflow:hidden;
-    }
-    header::after{
-      content:""; position:absolute; inset:auto -40% -60% auto; width:70%; height:200%;
-      background:radial-gradient(600px 220px at 100% 0%, rgba(52,151,32,.18), transparent 60%);
-      transform:rotate(-12deg);
-    }
-    .header-content{display:flex; align-items:center; justify-content:space-between; gap:18px; position:relative; z-index:2}
-    .logo{display:flex; align-items:center; gap:14px}
-    .logo i{
-      font-size:30px; width:56px; height:56px; display:grid; place-items:center; color:#fff;
-      border-radius:16px;
-      background:conic-gradient(from 210deg at 50% 50%, #9be08a 0 34%, var(--primary) 34% 68%, #e2f5da 68% 100%);
-      box-shadow:0 10px 28px rgba(52,151,32,.28), inset 0 0 0 1px #d9efcf;
-    }
-    .logo h1{font-size:26px}
-    .logo span{font-weight:300; color:var(--gray)}
+  .wrap{max-width:1200px;margin:0 auto;padding:24px}
+  header{background:linear-gradient(180deg,#fff 0%,#f4faf2 100%);border:1px solid var(--border);
+    border-radius:18px;padding:22px 20px;box-shadow:0 14px 40px rgba(0,0,0,.05)}
+  .brand{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .logo{width:54px;height:54px;border-radius:14px;background:
+    conic-gradient(from 200deg at 50% 50%, #9be08a 0 34%, var(--brand) 34% 68%, #e6f6de 68% 100%);
+    box-shadow:0 8px 26px rgba(52,151,32,.25), inset 0 0 0 1px #d9efcf}
+  h1{margin:0;font-size:clamp(1.2rem,2.2vw,1.8rem)}
+  .sub{color:var(--muted)}
 
-    .search-bar{display:flex; width:420px}
-    .search-bar input{
-      flex:1; padding:14px 16px; border-radius:12px 0 0 12px; border:1px solid var(--gray-light); background:#fff; outline:none; transition:var(--t);
-    }
-    .search-bar input:focus{border-color:var(--primary); box-shadow:0 0 0 4px rgba(52,151,32,.18)}
-    .search-bar button{
-      border:0; background:var(--primary); color:#fff; padding:0 18px; border-radius:0 12px 12px 0; cursor:pointer; transition:var(--t);
-    }
-    .search-bar button:hover{background:var(--primary-dark)}
+  .toolbar{display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:12px}
+  .search{position:relative}
+  .search input{width:100%;padding:13px 44px;border-radius:12px;border:1px solid var(--border);background:#fff;outline:none}
+  .search input:focus{border-color:var(--brand);box-shadow:0 0 0 6px var(--ring)}
+  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#8f9a92}
+  .count{align-self:center;color:var(--muted);font-size:.95rem}
 
-    .main{display:grid; grid-template-columns:280px 1fr; gap:24px}
-    .sidebar{
-      position:sticky; top:20px; background:#fff; border:1px solid var(--gray-light); border-radius:var(--radius);
-      padding:20px; box-shadow:var(--shadow); height:fit-content;
-    }
-    .sidebar h3{display:flex; align-items:center; gap:10px; color:var(--primary); padding-bottom:12px; border-bottom:2px solid var(--gray-light); margin-bottom:14px}
-    .sidebar-menu{list-style:none}
-    .sidebar-menu li{position:relative; margin-bottom:8px}
-    .sidebar-menu a{
-      text-decoration:none; color:var(--dark); display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; transition:var(--t);
-    }
-    .sidebar-menu a:hover, .sidebar-menu a.active{background:var(--primary); color:#fff}
-    .module-actions{position:absolute; right:10px; top:50%; transform:translateY(-50%); display:none}
-    .sidebar-menu li:hover .module-actions{display:flex; gap:6px}
-    .module-actions button{
-      width:26px;height:26px;border:0;border-radius:6px; background:rgba(255,255,255,.2); color:#fff; cursor:pointer;
-    }
+  .grid{display:grid;gap:18px;margin-top:18px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+  .module{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.04)}
+  .module header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px;background:linear-gradient(180deg,#fff 0%,#fbfefb 100%);cursor:pointer}
+  .title{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--brand-700)}
+  .dot{width:10px;height:10px;border-radius:999px;background:var(--brand);box-shadow:0 0 0 4px rgba(52,151,32,.12)}
+  .badge{background:rgba(52,151,32,.10);border:1px solid rgba(52,151,32,.18);color:var(--brand-700);padding:4px 10px;border-radius:999px;font-size:.8rem;font-weight:800}
+  .chev{color:#9aa79e;transition:transform .18s ease}
+  .open .chev{transform:rotate(180deg)}
+  .content{display:none;border-top:1px dashed var(--border);background:linear-gradient(180deg,#fff 0%,#f9fdf8 100%)}
+  .open .content{display:block}
 
-    .content-area{background:#fff; border:1px solid var(--gray-light); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
-    .tabs{display:flex; border-bottom:1px solid var(--gray-light)}
-    .tab{flex:1; text-align:center; padding:18px; font-weight:700; cursor:pointer; border-bottom:3px solid transparent; transition:var(--t)}
-    .tab.active{color:var(--primary); background:#f3fbf2; border-bottom-color:var(--primary)}
-    .tab i{margin-right:8px}
-    .content{display:none; padding:24px}
-    .content.active{display:block; animation:fade .35s ease}
-    @keyframes fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+  .list{list-style:none;margin:0;padding:10px 12px 14px}
+  .item{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;transition:background .12s ease}
+  .item:hover{background:#f4fbf2}
+  .icon{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--brand) 0%, #46c06c 100%);display:grid;place-items:center;color:#fff;font-weight:900}
+  .meta{flex:1}
+  .meta h3{margin:0 0 4px 0;font-size:1rem}
+  .meta p{margin:0;color:var(--muted);font-size:.95rem}
+  .open-btn{white-space:nowrap;text-decoration:none;background:var(--brand);color:#fff;padding:8px 12px;border-radius:10px;border:1px solid #2c7f1b}
+  .open-btn:focus{outline:3px solid var(--ring)}
 
-    .grid{display:grid; gap:22px; grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
-    .card{
-      background:#fff; border-radius:14px; border-left:6px solid var(--primary); padding:22px; cursor:pointer;
-      box-shadow:0 8px 24px rgba(0,0,0,.06); transition:var(--t); position:relative; overflow:hidden;
-    }
-    .card::before{content:""; position:absolute; left:0; top:0; width:100%; height:4px; background:linear-gradient(90deg,var(--primary),var(--accent))}
-    .card:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(0,0,0,.08)}
-    .icon{
-      width:58px;height:58px;border-radius:12px; display:grid; place-items:center; color:#fff; font-size:22px;
-      background:linear-gradient(135deg,var(--primary) 0%, var(--accent) 100%); margin-bottom:14px;
-    }
-    .card h3{margin-bottom:6px}
-    .muted{color:var(--gray)}
-    .stats{display:flex; justify-content:space-between; color:var(--gray); margin-top:12px; font-size:14px}
-
-    .detail .header{display:flex; align-items:center; justify-content:space-between; gap:10px; padding-bottom:16px; border-bottom:1px solid var(--gray-light); margin-bottom:18px}
-    .back{border:0; background:#edf6eb; color:var(--dark); padding:10px 14px; border-radius:10px; cursor:pointer}
-    .btn{border:0; padding:8px 14px; border-radius:10px; cursor:pointer; color:#fff}
-    .btn-warning{background:var(--warning)} .btn-danger{background:var(--danger)} .btn-success{background:var(--primary)}
-
-    .note-list{display:flex; flex-direction:column; gap:14px}
-    .note-item{display:flex; gap:14px; align-items:center; border-left:4px solid var(--primary); background:#fff; padding:16px; border-radius:12px; box-shadow:0 6px 16px rgba(0,0,0,.05)}
-    .note-icon{width:46px;height:46px;border-radius:50%; display:grid; place-items:center; color:#fff; background:var(--primary)}
-    .empty{ text-align:center; color:var(--gray); padding:60px 10px}
-    .add{position:fixed; right:26px; bottom:26px; width:60px; height:60px; border-radius:50%; background:var(--primary); color:#fff; border:0; font-size:24px; box-shadow:0 10px 24px rgba(52,151,32,.28); cursor:pointer; transition:var(--t)}
-    .add:hover{transform:scale(1.06); background:var(--primary-dark)}
-
-    /* Modais (mesma base do seu exemplo) */
-    .modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:1000; align-items:center; justify-content:center}
-    .modal.active{display:flex; animation:fade .2s ease}
-    .modal-content{background:#fff; width:92%; max-width:640px; border-radius:14px; overflow:hidden; box-shadow:var(--shadow)}
-    .modal-header{display:flex; align-items:center; justify-content:space-between; padding:18px; border-bottom:1px solid var(--gray-light)}
-    .modal-body{padding:18px}
-    .close{border:0;background:none;font-size:26px;cursor:pointer;color:var(--gray)}
-    .group{margin-bottom:14px}
-    label{display:block;margin-bottom:6px;font-weight:700}
-    .control{width:100%; padding:12px 14px; border:1px solid var(--gray-light); border-radius:10px}
-    .actions{display:flex; justify-content:flex-end; gap:10px; padding-top:12px; border-top:1px solid var(--gray-light)}
-    @media (max-width:1100px){.main{grid-template-columns:1fr}}
-  </style>
+  footer{margin-top:22px;color:var(--muted);font-size:.92rem;text-align:center}
+</style>
 </head>
 <body>
-  <div class="container">
-    <!-- Toast simples de “salvo” -->
-    <div id="toast" style="display:none;position:fixed;top:20px;right:20px;background:var(--success);color:#fff;padding:10px 14px;border-radius:10px;box-shadow:var(--shadow)">Dados salvos!</div>
-
+  <div class="wrap">
     <header>
-      <div class="header-content">
-        <div class="logo">
-          <i class="fa-solid fa-life-ring"></i>
-          <div>
-            <h1>Help<span>Center</span></h1>
-            <div class="muted">Central de Manuais • SOFT-ATA</div>
-          </div>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Central de Manuais — SOFT-ATA</h1>
+          <div class="sub">Escolha o módulo e clique em <strong>Abrir</strong> no manual desejado.</div>
         </div>
-        <div class="search-bar">
-          <input id="q" type="search" placeholder="Pesquisar em manuais e notas…">
-          <button id="btnSearch"><i class="fa-solid fa-search"></i></button>
+      </div>
+      <div class="toolbar">
+        <div class="search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.2-4.2M10.6 18a7.4 7.4 0 1 1 0-14.8 7.4 7.4 0 0 1 0 14.8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <input id="q" type="search" placeholder="Buscar por título/assunto…">
         </div>
+        <div class="count"><strong id="count">0</strong> manuais</div>
       </div>
     </header>
 
-    <main class="main">
-      <aside class="sidebar">
-        <h3><i class="fa-solid fa-th-large"></i> Módulos</h3>
-        <ul class="sidebar-menu" id="menu"></ul>
-      </aside>
+    <main class="grid" id="grid">
 
-      <section class="content-area">
-        <div class="tabs">
-          <div class="tab active" data-tab="manuais"><i class="fa-solid fa-book"></i>Manuais</div>
-          <div class="tab" data-tab="notas"><i class="fa-solid fa-note-sticky"></i>Notas</div>
-        </div>
+      <!-- ===== FOLHA DE PAGAMENTO ===== -->
+      <section class="module open" data-module="Folha de Pagamento">
+        <header>
+          <div class="title"><span class="dot"></span>Folha de Pagamento</div>
+          <span class="badge" data-badge>1</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content">
+          <ul class="list">
+            <!-- EXEMPLO: já publicado -->
+            <li class="item" data-topics="consignado empréstimo eventos esocial múltiplos">
+              <div class="icon">FP</div>
+              <div class="meta">
+                <h3>Múltiplos Empréstimos Consignados</h3>
+                <p>Como cadastrar mais de um empréstimo para o mesmo funcionário (com eventos distintos).</p>
+              </div>
+              <a class="open-btn" href="/manuals/multiplosemprest/" target="_blank" rel="noopener">Abrir</a>
+            </li>
 
-        <!-- Manuais -->
-        <div class="content active" id="tab-manuais">
-          <div class="grid" id="grid-manuais"></div>
-          <div class="detail" id="detail-manual" style="display:none"></div>
-        </div>
-
-        <!-- Notas -->
-        <div class="content" id="tab-notas">
-          <div class="grid" id="grid-notas"></div>
-          <div class="detail" id="detail-nota" style="display:none"></div>
+            <!-- ADICIONE AQUI novos manuais desse módulo
+            <li class="item" data-topics="férias adiantamento">
+              <div class="icon">FP</div>
+              <div class="meta">
+                <h3>Adiantamento de Férias</h3>
+                <p>Procedimento completo para configurar e lançar adiantamento.</p>
+              </div>
+              <a class="open-btn" href="/manuals/adiantamento-ferias/" target="_blank" rel="noopener">Abrir</a>
+            </li>
+            -->
+          </ul>
+          <div class="empty" hidden style="padding:12px 14px;color:#7b867e;font-style:italic">Nenhum manual neste módulo.</div>
         </div>
       </section>
+
+      <!-- ===== ESCRITA FISCAL ===== -->
+      <section class="module" data-module="Escrita Fiscal">
+        <header>
+          <div class="title"><span class="dot"></span>Escrita Fiscal</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content">
+          <ul class="list">
+            <!-- ADICIONE AQUI
+            <li class="item" data-topics="cfop csosn tributação">
+              <div class="icon">EF</div>
+              <div class="meta">
+                <h3>Parâmetros de CFOP/CSOSN</h3>
+                <p>Guia de configuração para operações mais comuns.</p>
+              </div>
+              <a class="open-btn" href="/manuals/param-cfop-csosn/" target="_blank" rel="noopener">Abrir</a>
+            </li>
+            -->
+          </ul>
+          <div class="empty" hidden>Nenhum manual neste módulo.</div>
+        </div>
+      </section>
+
+      <!-- ===== CONTABILIDADE GERAL ===== -->
+      <section class="module" data-module="Contabilidade Geral">
+        <header>
+          <div class="title"><span class="dot"></span>Contabilidade Geral</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
+      <!-- ===== LIVRO CAIXA ===== -->
+      <section class="module" data-module="Livro Caixa">
+        <header>
+          <div class="title"><span class="dot"></span>Livro Caixa</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
+      <!-- ===== ATIVO IMOBILIZADO ===== -->
+      <section class="module" data-module="Ativo Imobilizado">
+        <header>
+          <div class="title"><span class="dot"></span>Ativo Imobilizado</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
+      <!-- ===== GERENCIADOR CONTÁBIL ===== -->
+      <section class="module" data-module="Gerenciador Contábil">
+        <header>
+          <div class="title"><span class="dot"></span>Gerenciador Contábil</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
+      <!-- ===== CONTROLE DE TRIBUTOS ===== -->
+      <section class="module" data-module="Controle de Tributos">
+        <header>
+          <div class="title"><span class="dot"></span>Controle de Tributos</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
+      <!-- ===== DEMONSTRATIVO DE GADO ===== -->
+      <section class="module" data-module="Demonstrativo de Gado">
+        <header>
+          <div class="title"><span class="dot"></span>Demonstrativo de Gado</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
+      <!-- ===== SELEÇÃO DE PESSOAL ===== -->
+      <section class="module" data-module="Seleção de Pessoal">
+        <header>
+          <div class="title"><span class="dot"></span>Seleção de Pessoal</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
+      <!-- ===== PROTOCOLO ===== -->
+      <section class="module" data-module="Protocolo">
+        <header>
+          <div class="title"><span class="dot"></span>Protocolo</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
+      <!-- ===== SINDICAL ===== -->
+      <section class="module" data-module="Sindical">
+        <header>
+          <div class="title"><span class="dot"></span>Sindical</div>
+          <span class="badge" data-badge>0</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </header>
+        <div class="content"><ul class="list"></ul><div class="empty" hidden>Nenhum manual neste módulo.</div></div>
+      </section>
+
     </main>
 
-    <!-- Botão flutuante -->
-    <button class="add" id="btnAdd"><i class="fa-solid fa-plus"></i></button>
-
-    <!-- Modal Módulo -->
-    <div class="modal" id="modal-mod">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 id="mod-title">Adicionar Módulo</h2>
-          <button class="close" data-close="modal-mod">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="form-mod">
-            <input type="hidden" id="mod-id">
-            <div class="group"><label>Nome</label><input class="control" id="mod-name" required></div>
-            <div class="group"><label>Ícone (Font Awesome)</label><input class="control" id="mod-icon" placeholder="Ex.: fa-solid fa-user"></div>
-            <div class="actions">
-              <button type="button" class="btn btn-danger" data-close="modal-mod">Cancelar</button>
-              <button class="btn btn-success" type="submit">Salvar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Manual -->
-    <div class="modal" id="modal-man">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 id="man-title">Adicionar Manual</h2>
-          <button class="close" data-close="modal-man">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="form-man">
-            <input type="hidden" id="man-id">
-            <div class="group">
-              <label>Módulo</label>
-              <select class="control" id="man-mod" required></select>
-            </div>
-            <div class="group"><label>Título</label><input class="control" id="man-title-input" required></div>
-            <div class="group"><label>Descrição</label><input class="control" id="man-desc" required></div>
-            <div class="group"><label>Ícone</label><input class="control" id="man-icon" placeholder="Ex.: fa-solid fa-book-open"></div>
-            <div class="group"><label>Qtd. tópicos (ex.: 8)</label><input class="control" id="man-stats" type="number" min="1" value="6"></div>
-            <div class="group"><label>Link do manual (URL)</label><input class="control" id="man-link" placeholder="/manuals/<slug>/"></div>
-            <div class="group"><label>Conteúdo HTML (opcional)</label><textarea class="control" id="man-html" rows="8" placeholder="Se preferir, cole aqui um conteúdo HTML em vez de link."></textarea></div>
-            <div class="actions">
-              <button type="button" class="btn btn-danger" data-close="modal-man">Cancelar</button>
-              <button class="btn btn-success" type="submit">Salvar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
+    <footer>© 1991–2025 SOFT-ATA • Central de Manuais</footer>
   </div>
 
-  <script>
-    /* ===============================
-       Storage Helpers
-    ================================*/
-    const K = { MODS:'hc_mods', MANS:'hc_mans', NOTAS:'hc_notas' };
-    const Save = (k,v)=>localStorage.setItem(k, JSON.stringify(v));
-    const Load = (k,d=[])=>JSON.parse(localStorage.getItem(k)||JSON.stringify(d));
-    const Toast = (msg='Dados salvos!')=>{
-      const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block';
-      setTimeout(()=>t.style.display='none', 2200);
-    };
-
-    /* ===============================
-       Seed inicial (só na 1ª vez)
-    ================================*/
-    const seedIfEmpty = ()=>{
-      let mods = Load(K.MODS);
-      let mans = Load(K.MANS);
-      if(mods.length===0 && mans.length===0){
-        mods = [
-          {id:'mod_fp', name:'Folha de Pagamento', icon:'fa-solid fa-briefcase'},
-          {id:'mod_ef', name:'Escrita Fiscal', icon:'fa-solid fa-file-invoice'},
-          {id:'mod_cg', name:'Contabilidade Geral', icon:'fa-solid fa-scale-balanced'},
-          {id:'mod_lc', name:'Livro Caixa', icon:'fa-solid fa-cash-register'},
-          {id:'mod_ai', name:'Ativo Imobilizado', icon:'fa-solid fa-building-columns'},
-          {id:'mod_gc', name:'Gerenciador Contábil', icon:'fa-solid fa-diagram-project'},
-          {id:'mod_ct', name:'Controle de Tributos', icon:'fa-solid fa-percent'},
-          {id:'mod_dg', name:'Demonstrativo de Gado', icon:'fa-solid fa-cow'},
-          {id:'mod_sp', name:'Seleção de Pessoal', icon:'fa-solid fa-users'},
-          {id:'mod_pr', name:'Protocolo', icon:'fa-solid fa-envelope-open-text'},
-          {id:'mod_sd', name:'Sindical', icon:'fa-solid fa-handshake'}
-        ];
-        mans = [
-          {
-            id:1, module:'mod_fp',
-            title:'Múltiplos Empréstimos Consignados',
-            description:'Como cadastrar mais de um empréstimo para o mesmo funcionário (com eventos distintos).',
-            icon:'fa-solid fa-clipboard-list',
-            stats:'6',
-            link:'/manuals/multiplosemprest/',
-            content:''
-          }
-        ];
-        Save(K.MODS, mods); Save(K.MANS, mans); Save(K.NOTAS, []);
-      }
-    };
-    seedIfEmpty();
-
-    /* ===============================
-       Estado
-    ================================*/
-    let Modules = Load(K.MODS);
-    let Manuais = Load(K.MANS);
-    let Notas   = Load(K.NOTAS);
-    let CurrentTab = 'manuais';
-
-    /* ===============================
-       UI Elements
-    ================================*/
-    const menu = document.getElementById('menu');
-    const gridM = document.getElementById('grid-manuais');
-    const gridN = document.getElementById('grid-notas');
-    const detailM = document.getElementById('detail-manual');
-    const detailN = document.getElementById('detail-nota');
-
-    /* ===============================
-       Render: Menu lateral e combos
-    ================================*/
-    function renderMenu(){
-      menu.innerHTML='';
-      if(Modules.length===0){
-        menu.innerHTML = `<li style="padding:14px; color:var(--gray); text-align:center">Nenhum módulo cadastrado</li>`;
-        return;
-      }
-      Modules.forEach(m=>{
-        const li=document.createElement('li');
-        li.innerHTML = `
-          <a href="#" data-id="${m.id}"><i class="${m.icon||'fa-solid fa-folder'}"></i>${m.name}</a>
-          <div class="module-actions">
-            <button title="Editar" onclick="openMod('${m.id}')"><i class="fa-solid fa-pen"></i></button>
-            <button title="Excluir" onclick="delMod('${m.id}')"><i class="fa-solid fa-trash"></i></button>
-          </div>`;
-        menu.appendChild(li);
-        li.querySelector('a').addEventListener('click',e=>{
-          e.preventDefault();
-          menu.querySelectorAll('a').forEach(a=>a.classList.remove('active'));
-          e.currentTarget.classList.add('active');
-          filterByModule(m.id);
-        });
-      });
-
-      // preencher select do modal de manuais
-      const sel = document.getElementById('man-mod');
-      sel.innerHTML = Modules.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-    }
-
-    /* ===============================
-       Render cards por módulo
-    ================================*/
-    function calcTime(items){ return items.reduce((s,i)=>s+(parseInt(i.stats)||5)*2,0); }
-
-    function renderManuais(){
-      detailM.style.display='none';
-      gridM.style.display='grid';
-      gridM.innerHTML='';
-
-      if(Manuais.length===0){
-        gridM.innerHTML = `<div class="empty"><i class="fa-solid fa-book-open"></i><p>Nenhum manual cadastrado ainda.</p></div>`;
-        return;
-      }
-      // agrupar por módulo
-      const groups = [...new Set(Manuais.map(m=>m.module))];
-      groups.forEach(mid=>{
-        const mod = Modules.find(m=>m.id===mid); if(!mod) return;
-        const items = Manuais.filter(m=>m.module===mid);
-        const el = document.createElement('div');
-        el.className='card';
-        el.innerHTML = `
-          <div class="icon"><i class="${mod.icon||'fa-solid fa-folder'}"></i></div>
-          <h3>${mod.name}</h3>
-          <div class="muted">Manuais deste módulo</div>
-          <div class="stats">
-            <span><i class="fa-solid fa-list-ul"></i> ${items.length} manuais</span>
-            <span><i class="fa-solid fa-clock"></i> ${calcTime(items)} min</span>
-          </div>`;
-        el.addEventListener('click',()=>showManuaisByModule(mid));
-        gridM.appendChild(el);
-      });
-    }
-
-    function renderNotas(){
-      detailN.style.display='none';
-      gridN.style.display='grid';
-      gridN.innerHTML='';
-      if(Notas.length===0){
-        gridN.innerHTML = `<div class="empty"><i class="fa-solid fa-note-sticky"></i><p>Nenhuma nota cadastrada.</p></div>`;
-        return;
-      }
-      const groups = [...new Set(Notas.map(n=>n.module))];
-      groups.forEach(mid=>{
-        const mod = Modules.find(m=>m.id===mid); if(!mod) return;
-        const items = Notas.filter(n=>n.module===mid);
-        const el=document.createElement('div');
-        el.className='card';
-        el.innerHTML = `
-          <div class="icon"><i class="fa-solid fa-lightbulb"></i></div>
-          <h3>${mod.name}</h3>
-          <div class="muted">Notas de ajuda</div>
-          <div class="stats">
-            <span><i class="fa-solid fa-sticky-note"></i> ${items.length} notas</span>
-            <span><i class="fa-solid fa-clock"></i> rápidas</span>
-          </div>`;
-        el.addEventListener('click',()=>showNotesByModule(mid));
-        gridN.appendChild(el);
-      });
-    }
-
-    /* ===============================
-       Listagens internas dos módulos
-    ================================*/
-    function showManuaisByModule(mid){
-      const mod = Modules.find(m=>m.id===mid);
-      const list = Manuais.filter(m=>m.module===mid);
-      gridM.style.display='none';
-      detailM.style.display='block';
-      detailM.innerHTML = `
-        <div class="header">
-          <button class="back" onclick="renderManuais()"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
-          <h2>${mod.name} — Manuais</h2>
-          <div></div>
-        </div>
-        <div class="note-list">
-          ${list.map(m=>`
-          <div class="note-item">
-            <div class="note-icon"><i class="${m.icon||'fa-solid fa-book'}"></i></div>
-            <div style="flex:1">
-              <h3>${m.title}</h3>
-              <div class="muted">${m.description||''}</div>
-            </div>
-            <div style="display:flex; gap:8px">
-              <button class="btn btn-warning" onclick="openMan(${m.id})"><i class="fa-solid fa-pen"></i> Editar</button>
-              <button class="btn btn-danger" onclick="delMan(${m.id})"><i class="fa-solid fa-trash"></i> Excluir</button>
-              ${m.link ? `<a class="btn btn-success" href="${m.link}" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square"></i> Abrir manual</a>` : `<button class="btn btn-success" onclick="showManualDetail(${m.id})"><i class="fa-solid fa-eye"></i> Ver</button>`}
-            </div>
-          </div>`).join('')}
-        </div>`;
-    }
-
-    function showManualDetail(id){
-      const m = Manuais.find(x=>x.id===id);
-      gridM.style.display='none';
-      detailM.style.display='block';
-      detailM.innerHTML = `
-        <div class="header">
-          <button class="back" onclick="renderManuais()"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
-          <div>
-            <h2>${m.title}</h2>
-            <div class="muted">${m.description||''}</div>
-          </div>
-          <div>
-            ${m.link ? `<a class="btn btn-success" href="${m.link}" target="_blank" rel="noopener">Abrir manual</a>`:''}
-          </div>
-        </div>
-        <div>${m.content||'<div class="empty">Sem conteúdo interno — este manual abre por link externo.</div>'}</div>`;
-    }
-
-    function showNotesByModule(mid){
-      const mod = Modules.find(m=>m.id===mid);
-      const list = Notas.filter(n=>n.module===mid);
-      gridN.style.display='none';
-      detailN.style.display='block';
-      detailN.innerHTML = `
-        <div class="header">
-          <button class="back" onclick="renderNotas()"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
-          <h2>${mod.name} — Notas</h2>
-          <div></div>
-        </div>
-        <div class="note-list">
-          ${list.map(n=>`
-          <div class="note-item">
-            <div class="note-icon"><i class="fa-solid fa-lightbulb"></i></div>
-            <div style="flex:1">
-              <h3>${n.title}</h3>
-              <div class="muted">${n.description||''}</div>
-            </div>
-            <div style="display:flex; gap:8px">
-              <button class="btn btn-warning" onclick="openNote(${n.id})"><i class="fa-solid fa-pen"></i> Editar</button>
-              <button class="btn btn-danger" onclick="delNote(${n.id})"><i class="fa-solid fa-trash"></i> Excluir</button>
-            </div>
-          </div>`).join('')}
-        </div>`;
-    }
-
-    /* ===============================
-       Filtros e busca
-    ================================*/
-    function filterByModule(mid){
-      if(CurrentTab==='manuais'){
-        const items = Manuais.filter(m=>m.module===mid);
-        gridM.innerHTML='';
-        if(items.length===0){ gridM.innerHTML=`<div class="empty">Sem manuais neste módulo.</div>`; return; }
-        items.forEach(m=>{
-          const el=document.createElement('div'); el.className='card';
-          el.innerHTML = `
-            <div class="icon"><i class="${m.icon||'fa-solid fa-book'}"></i></div>
-            <h3>${m.title}</h3>
-            <div class="muted">${m.description||''}</div>
-            <div class="stats">
-              <span><i class="fa-solid fa-list-ul"></i> ${m.stats||'-'}</span>
-              <span><i class="fa-solid fa-clock"></i> ${(parseInt(m.stats)||5)*2} min</span>
-            </div>`;
-          el.addEventListener('click', ()=> m.link ? window.open(m.link,'_blank') : showManualDetail(m.id));
-          gridM.appendChild(el);
-        });
-      }else{
-        const items = Notas.filter(n=>n.module===mid);
-        gridN.innerHTML='';
-        if(items.length===0){ gridN.innerHTML=`<div class="empty">Sem notas neste módulo.</div>`; return; }
-        items.forEach(n=>{
-          const el=document.createElement('div'); el.className='card';
-          el.innerHTML = `
-            <div class="icon"><i class="fa-solid fa-note-sticky"></i></div>
-            <h3>${n.title}</h3>
-            <div class="muted">${n.description||''}</div>`;
-          el.addEventListener('click', ()=> showNotesByModule(mid));
-          gridN.appendChild(el);
-        });
-      }
-    }
-
-    document.getElementById('btnSearch').addEventListener('click', doSearch);
-    document.getElementById('q').addEventListener('keypress', e=>{ if(e.key==='Enter') doSearch(); });
-    function doSearch(){
-      const term = document.getElementById('q').value.trim().toLowerCase();
-      if(!term){ renderManuais(); renderNotas(); return; }
-      if(CurrentTab==='manuais'){
-        const res = Manuais.filter(m => (m.title+m.description+m.content).toLowerCase().includes(term));
-        gridM.innerHTML='';
-        if(res.length===0){ gridM.innerHTML=`<div class="empty"><i class="fa-solid fa-search"></i><p>Nenhum manual encontrado.</p></div>`; return; }
-        res.forEach(m=>{
-          const el=document.createElement('div'); el.className='card';
-          el.innerHTML = `<div class="icon"><i class="${m.icon||'fa-solid fa-book'}"></i></div>
-                          <h3>${m.title}</h3><div class="muted">${m.description||''}</div>`;
-          el.addEventListener('click',()=> m.link ? window.open(m.link,'_blank') : showManualDetail(m.id));
-          gridM.appendChild(el);
-        });
-      }else{
-        const res = Notas.filter(n => (n.title+n.description+n.content).toLowerCase().includes(term));
-        gridN.innerHTML='';
-        if(res.length===0){ gridN.innerHTML=`<div class="empty"><i class="fa-solid fa-search"></i><p>Nenhuma nota encontrada.</p></div>`; return; }
-        res.forEach(n=>{
-          const el=document.createElement('div'); el.className='card';
-          el.innerHTML = `<div class="icon"><i class="fa-solid fa-lightbulb"></i></div>
-                          <h3>${n.title}</h3><div class="muted">${n.description||''}</div>`;
-          el.addEventListener('click',()=> showNotesByModule(n.module));
-          gridN.appendChild(el);
-        });
-      }
-    }
-
-    /* ===============================
-       Abas
-    ================================*/
-    document.querySelectorAll('.tab').forEach(t=>{
-      t.addEventListener('click',()=>{
-        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-        t.classList.add('active');
-        const tab = t.dataset.tab; CurrentTab = tab;
-        document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
-        document.getElementById('tab-'+tab).classList.add('active');
-      });
+<script>
+  // abre/fecha módulos
+  document.querySelectorAll('.module header').forEach(h=>{
+    h.addEventListener('click', e=>{
+      if(e.target.closest('a')) return;
+      h.parentElement.classList.toggle('open');
+      updateBadges();
     });
+  });
 
-    /* ===============================
-       CRUD — Módulos / Manuais
-    ================================*/
-    const modModal = document.getElementById('modal-mod');
-    const manModal = document.getElementById('modal-man');
-    document.querySelectorAll('.close,[data-close]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.close||'').classList.remove('active')));
-
-    document.getElementById('btnAdd').addEventListener('click', ()=>{
-      if(CurrentTab==='manuais'){
-        if(Modules.length===0){ openMod(); return; }
-        openMan();
-      }else{
-        alert('Notas rápidas ainda não configuradas neste template.'); // pode estender depois
-      }
+  // busca simples
+  const q = document.getElementById('q');
+  q.addEventListener('input', ()=>{
+    const term = q.value.trim().toLowerCase();
+    document.querySelectorAll('.list .item').forEach(li=>{
+      const hay = (li.textContent + ' ' + (li.dataset.topics||'')).toLowerCase();
+      li.hidden = term && !hay.includes(term);
     });
+    updateBadges();
+  });
 
-    function openMod(id=null){
-      document.getElementById('mod-title').textContent = id?'Editar Módulo':'Adicionar Módulo';
-      document.getElementById('mod-id').value = id||'';
-      document.getElementById('mod-name').value = id ? (Modules.find(m=>m.id===id).name) : '';
-      document.getElementById('mod-icon').value = id ? (Modules.find(m=>m.id===id).icon||'') : '';
-      modModal.classList.add('active');
-    }
-    function delMod(id){
-      if(!confirm('Excluir este módulo?')) return;
-      if(Manuais.some(m=>m.module===id)){ alert('Não é possível excluir: existem manuais associados.'); return; }
-      Modules = Modules.filter(m=>m.id!==id); Save(K.MODS, Modules); Toast(); renderMenu(); renderManuais(); renderNotas();
-    }
-
-    document.getElementById('form-mod').addEventListener('submit', e=>{
-      e.preventDefault();
-      const id = document.getElementById('mod-id').value || ('mod_'+Date.now());
-      const name = document.getElementById('mod-name').value.trim();
-      const icon = document.getElementById('mod-icon').value.trim() || 'fa-solid fa-folder';
-      const exists = Modules.findIndex(m=>m.id===id);
-      if(exists>=0) Modules[exists] = {id,name,icon}; else Modules.push({id,name,icon});
-      Save(K.MODS, Modules); Toast(); modModal.classList.remove('active'); renderMenu();
+  // cartão inteiro clicável (além do botão Abrir)
+  document.querySelectorAll('.item').forEach(li=>{
+    li.addEventListener('click', e=>{
+      const a = li.querySelector('.open-btn');
+      if(a && !e.target.closest('a')) a.click();
     });
+  });
 
-    function openMan(id=null){
-      document.getElementById('man-title').textContent = id?'Editar Manual':'Adicionar Manual';
-      const sel = document.getElementById('man-mod');
-      if(Modules.length===0){ alert('Cadastre um módulo primeiro.'); return; }
-      if(!sel.innerHTML) renderMenu();
-
-      if(id){
-        const m = Manuais.find(x=>x.id===id);
-        document.getElementById('man-id').value = m.id;
-        document.getElementById('man-mod').value = m.module;
-        document.getElementById('man-title-input').value = m.title;
-        document.getElementById('man-desc').value = m.description;
-        document.getElementById('man-icon').value = m.icon||'';
-        document.getElementById('man-stats').value = m.stats||'6';
-        document.getElementById('man-link').value = m.link||'';
-        document.getElementById('man-html').value = m.content||'';
-      }else{
-        document.getElementById('form-man').reset();
-        document.getElementById('man-id').value='';
-      }
-      manModal.classList.add('active');
-    }
-    function delMan(id){
-      if(!confirm('Excluir este manual?')) return;
-      Manuais = Manuais.filter(x=>x.id!==id); Save(K.MANS, Manuais); Toast(); renderManuais();
-    }
-    document.getElementById('form-man').addEventListener('submit', e=>{
-      e.preventDefault();
-      const id = parseInt(document.getElementById('man-id').value) || (Manuais.length? Math.max(...Manuais.map(x=>x.id))+1 : 1);
-      const obj = {
-        id,
-        module: document.getElementById('man-mod').value,
-        title:  document.getElementById('man-title-input').value.trim(),
-        description: document.getElementById('man-desc').value.trim(),
-        icon: document.getElementById('man-icon').value.trim(),
-        stats: document.getElementById('man-stats').value.trim(),
-        link: document.getElementById('man-link').value.trim(),
-        content: document.getElementById('man-html').value
-      };
-      const i = Manuais.findIndex(x=>x.id===id);
-      if(i>=0) Manuais[i]=obj; else Manuais.push(obj);
-      Save(K.MANS, Manuais); Toast(); manModal.classList.remove('active'); renderManuais();
+  function updateBadges(){
+    document.querySelectorAll('.module').forEach(m=>{
+      const visible = m.querySelectorAll('.list .item:not([hidden])').length;
+      m.querySelector('[data-badge]').textContent = visible;
+      const empty = m.querySelector('.empty');
+      if(empty) empty.hidden = visible !== 0;
     });
-
-    /* ===============================
-       Inicialização
-    ================================*/
-    function init(){
-      renderMenu(); renderManuais(); renderNotas();
-    }
-    init();
-
-    // Abas
-    document.querySelectorAll('.tab').forEach(t=>{
-      t.addEventListener('click', ()=>{
-        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-        t.classList.add('active');
-        document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
-        document.getElementById('tab-'+t.dataset.tab).classList.add('active');
-        CurrentTab = t.dataset.tab;
-      });
-    });
-  </script>
+    // contador global
+    const total = document.querySelectorAll('.list .item:not([hidden])').length;
+    document.getElementById('count').textContent = total;
+  }
+  updateBadges();
+</script>
 </body>
 </html>
